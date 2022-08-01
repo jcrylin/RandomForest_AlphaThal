@@ -183,7 +183,7 @@ max_depth_graph_axis16 = max_depth_graph_axis(grid16)
 
 
 
-# graphing score vs error graphs
+# graphing model complexity vs model accuracy
 
 for n in range(5):
     x_model_complexity1 = []
@@ -218,7 +218,7 @@ for n in range(5):
     y_test_score8 = []
     y_train_score8 = []
 
-    for i in range(len(max_depth_graph_axis1)):  # finds max_depth when n=500
+    for i in range(len(max_depth_graph_axis1)):  # creates graphs when n=100,200,300,400,500
         if i % 5 == n:
             x_model_complexity1.append(max_depth_graph_axis1[i])
             y_test_score1.append(grid1.cv_results_['mean_test_score'][i])
