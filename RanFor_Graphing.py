@@ -80,7 +80,7 @@ def grid(df_x, df_y):
     
     return rf_grid
 
-
+# creates list of all best max depths found
 def max_depth_graph_axis(rf_grid):
     parameters = rf_grid.cv_results_['params']
     max_depth_list = []
