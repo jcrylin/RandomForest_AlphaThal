@@ -1,5 +1,5 @@
 # RandomForest_AlphaThal
-This respiratory contains code to detect deletions in the alpha thalassemia region by using random forest classifiers.
+This repository contains code to detect deletions in the alpha thalassemia region by using random forest classifiers.
 
 The focus of this project was to use random forest classifiers to analyze large deletions in the alpha thalassemia region from short sequence reads.  
 
