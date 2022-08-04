@@ -59,7 +59,7 @@ def grid(df_x, df_y):
     n_trees = [100, 200, 300, 400, 500]
     max_dep = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    # inserts the log2 value of the number of rows in the datasets into 'max_dep' in order
+    # inserts the log2 value of the number of rows in the datasets into 'max_dep' based on numerical value
     if (limit in max_dep) == False:
         for m in max_dep:
             if limit < m:
