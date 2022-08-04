@@ -35,7 +35,7 @@ def read_file(filename_path):
     return df_x, df_y, df_column_names, mutated_genotype
 
 
-# shuffles data set
+# splits data set
 def shuffle(df_x, df_y):
     # takes 100 random samples out and stores it
     df_variables_test = df_x[:100]
