@@ -13,7 +13,6 @@ import math
 
 
 # reads in each file on trek, put in file path names
-
 def read_file(filename_path):
     count_slash = filename_path.count('/')
     filename = filename_path.split('/', count_slash)[-1]  # filename is after the last slash
