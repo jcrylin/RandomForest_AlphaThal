@@ -71,16 +71,13 @@ def grid(df_x, df_y):
                           return_train_score=True, cv=5)
     rf_grid.fit(df_x, df_y)
     
-    
     return rf_grid
 
 
 # calculates cross validation score of model with default hyper parameters
 # ALSO returns model created. BUT can also just use .best_estimator from GridSearchCV
-
 # tutorial referenced:
 ### https://www.youtube.com/watch?v=gJo0uNL-5Qw
-
 def calculate_score(df, output, best_n_trees, best_max_depth):
 
     model = RandomForestClassifier(n_estimators=best_n_trees, max_depth=best_max_depth,
@@ -97,7 +94,6 @@ read_file_sim = read_file('/cluster/ifs/projects/AlphaThal/MachineLearning/Featu
 shuffle_sim = shuffle(read_file_sim[0], read_file_sim[1])
 grid_sim = grid(shuffle_sim[0], shuffle_sim[2])
 
-
 # testing simulated model with 100 test points that were taken out beforehand
 test_preds = cal_score_output_sim[0].predict(shuffle_sim[1])  # predicting x variables from test set using model
 test_actual = shuffle_sim[3]
@@ -106,7 +102,6 @@ print(accuracy_score(test_actual, test_preds))
 
 # reads in file with real data
 # NO shuffling
-
 def read_real_data(filename):
 
     # reads in dataframe that has real data
@@ -139,7 +134,6 @@ y_prob_grid = model_grid.predict_proba(read_file_real[0].to_numpy()) # finds gen
 
 
 # creates textfiles to put all predictions/probability predictions in 
-
 with open('/cluster/ifs/projects/AlphaThal/sandboxes/jennifer/RandomForest_AlphaThal/genotype_output_grid.txt', 'w') as writer:
   for index, genotype in enumerate(y_pred_grid):
     writer.write(str(index+1) + ': ' + genotype + '\n')
