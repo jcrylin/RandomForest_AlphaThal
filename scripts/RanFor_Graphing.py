@@ -75,7 +75,6 @@ def grid(df_x, df_y):
                           return_train_score=True, cv=5)
     rf_grid.fit(df_x, df_y)
     
-    
     return rf_grid
 
 
