@@ -21,7 +21,6 @@ def read_file(filename_path):
     
     # reads in dataset
     df = pd.read_csv('/cluster/ifs/projects/AlphaThal/MachineLearning/Features/' + foldername + '/' + filename, sep='\t')
-   
     
     # randomly shuffles dataset
     df = df.sample(frac=1)
@@ -61,6 +60,7 @@ def grid(df_x, df_y):
     n_trees = [100, 200, 300, 400, 500]
     max_dep = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+    # inserts the log2 value of the number of rows in the datasets into 'max_dep' in order
     if (limit in max_dep) == False:
         for m in max_dep:
             if limit < m:
@@ -69,7 +69,6 @@ def grid(df_x, df_y):
 
     if max_dep[-1] < limit:
         max_dep.append(limit)
-    
     
     parameters = {'n_estimators':n_trees, 'max_depth':max_dep}
     
@@ -80,7 +79,9 @@ def grid(df_x, df_y):
     
     return rf_grid
 
+
 # creates list of all best max depths found
+# max depths are ordered in correspondence to their mean_test/train_scores
 def max_depth_graph_axis(rf_grid):
     parameters = rf_grid.cv_results_['params']
     max_depth_list = []
@@ -182,9 +183,7 @@ grid16 = grid(shuffle16[0], shuffle16[2])
 max_depth_graph_axis16 = max_depth_graph_axis(grid16)
 
 
-
 # graphing model complexity vs model accuracy
-
 for n in range(5):
     x_model_complexity1 = []
     y_test_score1 = []
@@ -281,10 +280,8 @@ for n in range(5):
 # calculates cross validation score of model with default hyper parameters
 # also returns model
 # can also just use .best_estimators_ from GridSearchCV
-
 # tutorial referenced:
 ### https://www.youtube.com/watch?v=gJo0uNL-5Qw
-
 def calculate_score(df, output, best_n_trees, best_max_depth):
     model = RandomForestClassifier(n_estimators=best_n_trees, max_depth=best_max_depth,
                                        random_state=2)
@@ -316,12 +313,12 @@ best_params16 = grid16.best_params_
 
 # creates coverage vs model accuracy graph
 # graph is between HG19 and CHM13 (different reference genomes)
-
 x_coverage19 = np.linspace(10,40,4, dtype=int)  # grabs coverage at 10x, 20x, 30x, and 40x
 x_coverage13 = np.linspace(10,40,4, dtype=int)
 y_accuracy19 = []
 y_accuracy13 = []
 
+# appends score value depending on the index of the best parameters
 y_accuracy19.append(grid5.cv_results_['mean_test_score'][grid5.cv_results_['params'].index(best_params5)])
 y_accuracy19.append(grid6.cv_results_['mean_test_score'][grid6.cv_results_['params'].index(best_params6)])
 y_accuracy19.append(grid7.cv_results_['mean_test_score'][grid7.cv_results_['params'].index(best_params7)])
@@ -344,15 +341,12 @@ plt.legend(fontsize=36)
 plt.savefig('/cluster/ifs/projects/AlphaThal/sandboxes/jennifer/RandomForest_AlphaThal/coverage_score_graph' + '.png')
 
 
-
 # displays a tree from the random forest model
-
 # tutorials used
 ### https://scikit-learn.org/stable/modules/generated/sklearn.tree.export_graphviz.html
 ### https://towardsdatascience.com/how-to-visualize-a-decision-tree-from-a-random-forest-in-python-using-scikit-learn-38ad2d75f21c   
 ### https://mljar.com/blog/visualize-decision-tree/
 ### https://scikit-learn.org/stable/auto_examples/tree/plot_iris_dtc.html#sphx-glr-auto-examples-tree-plot-iris-dtc-py
-
 # just picking out best random forest from random text file, also pick out first tree in forest
 best_random_forest = grid1.best_estimator_
 random_tree = best_random_forest.estimators_[0]
